@@ -1,22 +1,25 @@
 # Shinken Docker installation using pip (latest)
-FROM        debian
+FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
-# Install Shinken, Nagios plugins and nginx
-RUN         apt-get update
-RUN         apt-get install -y python-pip python-pycurl python-cherrypy3 nagios-plugins nginx
-RUN         useradd --create-home shinken
-RUN         pip install shinken
-RUN         update-rc.d -f shinken remove
+# Install Shinken, Nagios plugins, nginx and supervisord
+RUN         apt-get update && apt-get install -y python-pip \
+                python-pycurl \
+                python-cherrypy3 \
+                nagios-plugins \
+                nginx
+RUN         useradd --create-home shinken && \
+                pip install shinken && \
+                update-rc.d -f shinken remove
+RUN         pip install supervisor && mkdir -p /var/log/supervisord
 
 # Install shinken modules from shinken.io
-RUN         su - shinken -c 'shinken --init'
-RUN         su - shinken -c 'shinken install webui'
-RUN         su - shinken -c 'shinken install auth-htpasswd'
-RUN         su - shinken -c 'shinken install sqlitedb'
-RUN         su - shinken -c 'shinken install pickle-retention-file-scheduler'
-RUN         su - shinken -c 'shinken install booster-nrpe'
-RUN         mkdir -p /etc/shinken/custom_configs
+RUN         su - shinken -c 'shinken --init' && \
+                su - shinken -c 'shinken install webui' && \
+                su - shinken -c 'shinken install auth-htpasswd' && \
+                su - shinken -c 'shinken install sqlitedb' && \
+                su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
+                su - shinken -c 'shinken install booster-nrpe'
 
 # Configure Shinken modules
 ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
@@ -24,18 +27,17 @@ ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
 ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
 ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
+RUN         mkdir -p /etc/shinken/custom_configs
 
 # Configure nginx
-RUN         mkdir -p /var/log/nginx
-RUN         rm -f /etc/nginx/sites-enabled/default
 ADD         shinken/shinken_nginx.conf /etc/nginx/sites-available/shinken_nginx.conf
-RUN         ln -sf /etc/nginx/sites-available/shinken_nginx.conf /etc/nginx/sites-enabled/shinken_nginx.conf
-RUN         echo "daemon off;" >> /etc/nginx/nginx.conf
-RUN         update-rc.d -f nginx remove
+RUN         mkdir -p /var/log/nginx && \
+                rm -f /etc/nginx/sites-enabled/default && \
+                ln -sf /etc/nginx/sites-available/shinken_nginx.conf /etc/nginx/sites-enabled/shinken_nginx.conf && \
+                update-rc.d -f nginx remove && \
+                echo "daemon off;" >> /etc/nginx/nginx.conf
 
-# Install supervisor and configuration 
-RUN         pip install supervisor
-RUN         mkdir -p /var/log/supervisord
+# configure supervisor 
 ADD         supervisor/supervisord.conf /etc/supervisord.conf
 ADD         supervisor/supervisord.d /etc/supervisord.d
 
