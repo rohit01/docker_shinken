@@ -21,14 +21,6 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
                 su - shinken -c 'shinken install booster-nrpe'
 
-# Configure Shinken modules
-ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
-ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
-ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
-ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
-ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
-RUN         mkdir -p /etc/shinken/custom_configs
-
 # Configure nginx
 ADD         shinken/shinken_nginx.conf /etc/nginx/sites-available/shinken_nginx.conf
 RUN         mkdir -p /var/log/nginx && \
@@ -36,6 +28,14 @@ RUN         mkdir -p /var/log/nginx && \
                 ln -sf /etc/nginx/sites-available/shinken_nginx.conf /etc/nginx/sites-enabled/shinken_nginx.conf && \
                 update-rc.d -f nginx remove && \
                 echo "daemon off;" >> /etc/nginx/nginx.conf
+
+# Configure Shinken modules
+ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
+ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
+ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
+ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
+ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
+RUN         mkdir -p /etc/shinken/custom_configs
 
 # configure supervisor 
 ADD         supervisor/supervisord.conf /etc/supervisord.conf
