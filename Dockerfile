@@ -7,6 +7,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
                 nagios-plugins \
+                libsys-statistics-linux-perl \
                 nginx \
                 supervisor
 RUN         useradd --create-home shinken && \
