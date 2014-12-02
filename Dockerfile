@@ -38,10 +38,6 @@ ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 RUN         mkdir -p /etc/shinken/custom_configs
 RUN         ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
 
-# Add default config initializer
-Add         shinken/initialize_docker_shinken.sh /bin/initialize_docker_shinken.sh
-RUN         chmod a+x /bin/initialize_docker_shinken.sh
-
 # Expose /var/log and shinken's custom_configs as mountable directories
 VOLUME      ["/etc/shinken/custom_configs", "/var/log/"]
 
