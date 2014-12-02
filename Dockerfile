@@ -48,4 +48,4 @@ ADD         supervisor/conf.d/* /etc/supervisor/conf.d/
 EXPOSE  80
 
 # Default docker process
-CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf", "-n"]
