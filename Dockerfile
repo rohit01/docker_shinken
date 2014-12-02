@@ -7,11 +7,11 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
                 nagios-plugins \
-                nginx
+                nginx \
+                supervisor
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f shinken remove
-RUN         pip install supervisor && mkdir -p /var/log/supervisord
 
 # Install shinken modules from shinken.io
 RUN         su - shinken -c 'shinken --init' && \
@@ -42,8 +42,7 @@ RUN         ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpas
 VOLUME      ["/etc/shinken/custom_configs", "/var/log/"]
 
 # configure supervisor
-ADD         supervisor/supervisord.conf /etc/supervisord.conf
-ADD         supervisor/supervisord.d /etc/supervisord.d
+ADD         supervisor/conf.d/* /etc/supervisor/conf.d/
 
 # Expost port 80 (nginx)
 EXPOSE  80
