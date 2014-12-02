@@ -9,7 +9,9 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 apache2 \
-                supervisor
+                supervisor \
+                xvfb \
+                libapache2-mod-fcgid
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
