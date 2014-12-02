@@ -14,7 +14,7 @@ if [ ${ls_count} -eq 0 ]; then
     cd "${custom_configs_dir}"
     for dir_name in commands timeperiods escalations templates notificationways servicegroups hostgroups contactgroups contacts hosts services contacts realms resources
     do
-        mkdir "${dir_name}"
+        mkdir -p "${dir_name}"
         echo "Logical directory to keep Shinken ${dir_name} .cfg files here" > "${dir_name}/README.md"
         echo "=====" >> "${dir_name}/README.md"
     done
