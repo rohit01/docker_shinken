@@ -36,7 +36,7 @@ ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
 ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 RUN         mkdir -p /etc/shinken/custom_configs
-RUN         ln -sf /etc/shinken/custom_configshtpasswd.users /etc/shinken/htpasswd.users
+RUN         ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
 
 # Add default config initializer
 Add         shinken/initialize_docker_shinken.sh /bin/initialize_docker_shinken.sh
