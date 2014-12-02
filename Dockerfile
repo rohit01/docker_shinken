@@ -44,8 +44,8 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
-# Expose /var/log and shinken's custom_configs as mountable directories
-VOLUME      ["/etc/shinken/custom_configs", "/var/log/"]
+# Expose shinken's custom_configs as mountable directories
+VOLUME      ["/etc/shinken/custom_configs"]
 
 # configure supervisor
 ADD         supervisor/conf.d/* /etc/supervisor/conf.d/
