@@ -29,6 +29,9 @@ if [ ! -r "${custom_configs_dir}/htpasswd.users" ]; then
 #     sudo apt-get install apache2-utils
 # Use: 
 #     htpasswd -c htpasswd.users <username>
+# Default:
+#    Username: admin
+#    Password: admin
 #
 admin:$apr1$j/CRE/fJ$5p4u5PnvwQehBuulY8x0n1
 
