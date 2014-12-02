@@ -39,6 +39,7 @@ initialize_configs() {
             echo "Logical directory to keep Shinken ${dir_name} .cfg files here" > "${dir_name}/README.md"
             echo "=====" >> "${dir_name}/README.md"
         done
+        cd -
     fi
 
     if [ ! -r "${CUSTOM_CONFIGS_DIR}/htpasswd.users" ]; then
