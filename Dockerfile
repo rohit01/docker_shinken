@@ -38,6 +38,12 @@ ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 RUN         mkdir -p /etc/shinken/custom_configs
 RUN         ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
 
+# Copy extra NRPE plugins and fix permissions
+ADD         extra_plugins/* /usr/lib/nagios/plugins/
+RUN         cd /usr/lib/nagios/plugins/ && \
+                chmod a+x * && \
+                chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
+
 # Expose /var/log and shinken's custom_configs as mountable directories
 VOLUME      ["/etc/shinken/custom_configs", "/var/log/"]
 
