@@ -9,9 +9,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 apache2 \
-                supervisor \
-                xvfb \
-                libapache2-mod-fcgid
+                supervisor
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
@@ -29,7 +27,7 @@ RUN         su - shinken -c 'shinken --init' && \
 
 # Install and configure thruk
 ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
-RUN         dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb && \
+RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
                 rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
