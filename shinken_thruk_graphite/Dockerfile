@@ -11,7 +11,8 @@ RUN         apt-get update && apt-get install -y python-pip \
                 apache2 \
                 libapache2-mod-proxy-html \
                 supervisor \
-                python-dev
+                python-dev \
+                python-cairo
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
