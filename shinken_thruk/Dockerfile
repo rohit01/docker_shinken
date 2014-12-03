@@ -1,5 +1,5 @@
 # Shinken Docker installation using pip (latest)
-FROM        ubuntu:14.04
+FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
 # Install Shinken, Nagios plugins, apache2 and supervisord
@@ -9,7 +9,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 apache2 \
-                libapache2-mod-proxy-* \
+                libapache2-mod-proxy-html \
                 supervisor
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -27,10 +27,10 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install livestatus'
 
 # Install and configure thruk
-ADD         http://www.thruk.org/files/pkg/v1.84-6/ubuntu14.04/amd64/thruk_1.84-6_ubuntu14.04_amd64.deb /usr/src/
-RUN         (dpkg -iE /usr/src/thruk_1.84-6_ubuntu14.04_amd64.deb || apt-get install -y -f) && \
+ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
+RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
                 apt-get clean && \
-                rm -f /usr/src/thruk_1.84-6_ubuntu14.04_amd64.deb
+                rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
 # Configure apache
