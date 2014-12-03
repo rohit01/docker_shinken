@@ -1,5 +1,5 @@
 # Shinken Docker installation using pip (latest)
-FROM        debian:jessie
+FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
 # Install Shinken, Nagios plugins, apache2 and supervisord
