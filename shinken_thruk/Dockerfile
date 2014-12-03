@@ -9,6 +9,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 apache2 \
+                libapache2-mod-proxy-html \
                 supervisor
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -34,6 +35,7 @@ ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
 # Configure apache
 ADD         shinken/shinken_apache.conf /etc/apache2/conf.d/shinken_apache.conf
+RUN         ln -sf /etc/apache2/mods-available/proxy* /etc/apache2/mods-enabled/
 
 # Configure Shinken modules
 ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
