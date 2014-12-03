@@ -9,7 +9,8 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 nginx \
-                supervisor
+                supervisor && \
+                apt-get clean
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f shinken remove
