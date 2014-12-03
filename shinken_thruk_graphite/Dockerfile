@@ -29,6 +29,13 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install graphite' && \
                 su - shinken -c 'shinken install ui-graphite'
 
+# Install and configure thruk
+ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
+RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
+                apt-get clean && \
+                rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
+ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
+
 # Install Graphite
 RUN         pip install Twisted==11.1.0 && \
                 pip install flup==1.0.2 && \
@@ -39,13 +46,6 @@ RUN         pip install Twisted==11.1.0 && \
                 pip install carbon==0.9.12 && \
                 pip install graphite-web==0.9.12 && \
                 pip install gunicorn==19.1.1
-
-# Install and configure thruk
-ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
-RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
-                apt-get clean && \
-                rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
-ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
 # Configure apache
 ADD         shinken/shinken_apache.conf /etc/apache2/conf.d/shinken_apache.conf
