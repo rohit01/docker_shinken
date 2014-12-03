@@ -75,7 +75,7 @@ ADD         graphite/storage-aggregation.conf /opt/graphite/conf/
 ADD         graphite/local_settings.py /opt/graphite/webapp/graphite/local_settings.py
 RUN         mkdir -p /var/log/graphite && \
                 cd /opt/graphite/webapp/graphite/ && \
-                python manage.py syncdb
+                python manage.py syncdb --noinput
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/
