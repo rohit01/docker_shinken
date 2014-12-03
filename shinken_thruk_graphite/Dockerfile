@@ -42,7 +42,10 @@ RUN         pip install Twisted==11.1.0 && \
 
 # Install and configure thruk
 ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
-RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
+RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
+                    apt-get install -y -f || \
+                    dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
+                    apt-get install -y -f || true) && \
                 apt-get clean && \
                 rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
