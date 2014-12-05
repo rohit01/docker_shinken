@@ -1,7 +1,7 @@
 Docker Shinken
 ==============
 
-This repository contains docker file for automated builds of:
+This repository contains Dockerfile for automated builds of:
 
 * Shinken: <https://registry.hub.docker.com/u/rohit01/shinken/>
 * shinken Thruk: <https://registry.hub.docker.com/u/rohit01/shinken_thruk/>
