@@ -7,7 +7,7 @@ How to run:
 
     ```
     $ git clone https://github.com/rohit01/docker_shinken.git
-    $ cd docker_shinken/shinken_thruk
+    $ cd docker_shinken/shinken_thruk_graphite
     $ sudo docker run -d -v "$(pwd)/custom_configs:/etc/shinken/custom_configs" -p 80:80 rohit01/shinken_thruk_graphite
     ```
 
