@@ -9,7 +9,7 @@ How to run:
     $ cd docker_shinken/shinken_basic
     $ sudo docker run -d -v "$(pwd)/custom_configs:/etc/shinken/custom_configs" -p 80:80 rohit01/shinken
 
-Once done, visit this url: <http://localhost/>
+Once done, visit this url: <http://localhost/>  
 Default credentials: admin/admin
 
 Note:
