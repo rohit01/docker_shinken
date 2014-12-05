@@ -5,13 +5,11 @@ It contains shinken, thruk and graphite installation along with few must have sh
 
 How to run:
 
-    ```
     $ git clone https://github.com/rohit01/docker_shinken.git
     $ cd docker_shinken/shinken_thruk_graphite
     $ sudo docker run -d -v "$(pwd)/custom_configs:/etc/shinken/custom_configs" -p 80:80 rohit01/shinken_thruk_graphite
-    ```
 
-Once done, visit these urls (Default credential - admin/admin):
+Once done, visit these urls (Default credentials - admin/admin):
 
 * Default WebUI: <http://localhost/>
 * Thruk Web Interface: <http://localhost/thruk/>

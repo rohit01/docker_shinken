@@ -5,14 +5,12 @@ It has basic shinken installation along with few must have modules like WebUI (W
 
 How to run:
 
-    ```
     $ git clone https://github.com/rohit01/docker_shinken.git
     $ cd docker_shinken/shinken_basic
     $ sudo docker run -d -v "$(pwd)/custom_configs:/etc/shinken/custom_configs" -p 80:80 rohit01/shinken
-    ```
 
 Once done, visit this url: <http://localhost/>
-Default credential - admin/admin
+Default credentials: admin/admin
 
 Note:
 
