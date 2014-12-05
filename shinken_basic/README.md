@@ -15,8 +15,8 @@ Default credentials: admin/admin
 Note:
 
 * [custom_configs/](custom_configs/): Add all you configuration files here.
-* [custom_configs/htpasswd.users](custom_configs/htpasswd.users): Define user login credentials here. Documentation is written as comments.
+* [custom_configs/htpasswd.users](custom_configs/htpasswd.users): Define user login credentials here. Documentation is written as comments in this file.
 * The nrpe plugins installation directory is /usr/lib/nagios/plugins.
-* If you are using custom NRPE plugins, please mount your plugins directory inside docker container at /usr/local/custom_plugins. You need to modify resource paths accordingly.
+* If you are using custom NRPE plugins, please mount your plugins directory inside docker container at /usr/local/custom_plugins. You need to define resource paths accordingly.
 
 Docker registry link: <https://registry.hub.docker.com/u/rohit01/shinken/>
