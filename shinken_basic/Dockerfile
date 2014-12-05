@@ -10,6 +10,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libsys-statistics-linux-perl \
                 nginx \
                 supervisor && \
+                apt-get -y autoremove && \
                 apt-get clean
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -37,8 +38,8 @@ ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
 ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
 ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
-RUN         mkdir -p /etc/shinken/custom_configs
-RUN         ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
+RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
+                ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/
@@ -46,8 +47,8 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
-# Expose shinken's custom_configs as mountable directories
-VOLUME      ["/etc/shinken/custom_configs"]
+# Define mountable directories
+VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 
 # configure supervisor
 ADD         supervisor/conf.d/* /etc/supervisor/conf.d/

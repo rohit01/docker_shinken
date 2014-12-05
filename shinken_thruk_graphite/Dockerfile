@@ -47,6 +47,7 @@ RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
                     apt-get install -y -f || \
                     dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
                     apt-get install -y -f || true) && \
+                apt-get -y autoremove && \
                 apt-get clean && \
                 rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
@@ -64,7 +65,7 @@ ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 ADD         shinken/graphite.cfg /etc/shinken/modules/graphite.cfg
 ADD         shinken/ui-graphite.cfg /etc/shinken/modules/ui-graphite.cfg
-RUN         mkdir -p /etc/shinken/custom_configs && \
+RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \
                 rm -f /etc/thruk/htpasswd && \
                 ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd
@@ -84,8 +85,8 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
-# Expose shinken's custom_configs as mountable directories
-VOLUME      ["/etc/shinken/custom_configs"]
+# Define mountable directories
+VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 
 # configure supervisor
 ADD         supervisor/conf.d/* /etc/supervisor/conf.d/
