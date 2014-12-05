@@ -3,9 +3,9 @@ Docker Shinken
 
 This repository contains docker file for automated builds of:
 
-* Shinken: <https://hub.docker.com/u/rohit01/shinken/>
-* shinken Thruk: <https://hub.docker.com/u/rohit01/shinken_thruk/>
-* shinken Thruk Graphite: <https://hub.docker.com/u/rohit01/shinken_thruk_graphite/>
+* Shinken: <https://registry.hub.docker.com/u/rohit01/shinken/>
+* shinken Thruk: <https://registry.hub.docker.com/u/rohit01/shinken_thruk/>
+* shinken Thruk Graphite: <https://registry.hub.docker.com/u/rohit01/shinken_thruk_graphite/>
 
 Get started in 3 easy steps:
 ===========================
