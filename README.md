@@ -16,8 +16,7 @@ Get started in 3 easy steps:
     * **Shinken Thruk**: Shinken (as written above) + Thruk web interface. Internal web server nginx is replaced with apache2. Link: <https://registry.hub.docker.com/u/rohit01/shinken_thruk/>
     * **Shinken Thruk Graphite**: Shinken Thruk (as written above) + graph support in WebUI. Graphs are stored and served using graphite. Retention is configured for 1 month on a per 2 minute basis. Link: <https://registry.hub.docker.com/u/rohit01/shinken_thruk_graphite/>
 
-    Sample Command:
-    $ sudo docker pull rohit01/shinken
+    Sample Command: `$ sudo docker pull rohit01/shinken`
 
 2. Clone this project. There are three directories corresponding to the docker images mentioned above. Go inside the directory corresponding to your selected image. You will see a directory named: [custom_configs/](https://github.com/rohit01/docker_shinken/tree/master/shinken_basic/custom_configs). Keep all your configuration files here. A default configuration for monitoring docker host is already defined. User login details can be updated in this file: [htpasswd.users](https://github.com/rohit01/docker_shinken/blob/master/shinken_basic/custom_configs/htpasswd.users). File contains the documentation in comments.
 
