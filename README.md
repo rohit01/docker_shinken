@@ -22,9 +22,11 @@ Get started in 3 easy steps:
 
 3. Run the docker image. Expose TCP port 80 to the base machine and mount custom_configs directory to /etc/shinken/custom_configs. Sample execution:
 
+    ```
     $ git clone https://github.com/rohit01/docker_shinken.git
     $ cd docker_shinken/shinken_basic
     $ sudo docker run -d -v "$(pwd)/custom_configs:/etc/shinken/custom_configs" -p 80:80 rohit01/shinken
+    ```
 
 Open your browser and visit these urls (Default credential - admin/admin):
 
