@@ -42,15 +42,12 @@ RUN         pip install Twisted==11.1.0 && \
                 pip install gunicorn==19.1.1
 
 # Install and configure thruk
-ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
-RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
-                    apt-get install -y -f || \
-                    dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || \
-                    apt-get install -y -f || true) && \
-                apt-get -y autoremove && \
-                apt-get clean && \
-                rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
-ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
+RUN	gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7
+RUN	gpg --armor --export F8C1CA08A57B9ED7 | apt-key add -
+RUN	echo 'deb http://labs.consol.de/repo/stable/debian wheezy main' >> /etc/apt/sources.list
+RUN	apt-get update
+RUN     apt-get install -y thruk
+ADD	thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
 # Configure apache
 ADD         shinken/shinken_apache.conf /etc/apache2/conf.d/shinken_apache.conf
