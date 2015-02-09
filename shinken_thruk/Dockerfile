@@ -27,11 +27,12 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install livestatus'
 
 # Install and configure thruk
-ADD         http://www.thruk.org/files/pkg/v1.84-6/debian7/amd64/thruk_1.84-6_debian7_amd64.deb /usr/src/
-RUN         (dpkg -iE /usr/src/thruk_1.84-6_debian7_amd64.deb || apt-get install -y -f) && \
-                apt-get -y autoremove && \
-                apt-get clean && \
-                rm -f /usr/src/thruk_1.84-6_debian7_amd64.deb
+RUN         gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \
+                gpg --armor --export F8C1CA08A57B9ED7 | apt-key add - && \
+                echo 'deb http://labs.consol.de/repo/stable/debian wheezy main' >> /etc/apt/sources.list && \
+                apt-get update && \
+                apt-get install -y thruk && \
+                apt-get clean
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
 
 # Configure apache
