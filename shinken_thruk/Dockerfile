@@ -12,7 +12,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libapache2-mod-proxy-html \
                 supervisor
 RUN         useradd --create-home shinken && \
-                pip install shinken && \
+                pip install shinken==2.0 && \
                 update-rc.d -f apache2 remove && \
                 update-rc.d -f shinken remove
 
