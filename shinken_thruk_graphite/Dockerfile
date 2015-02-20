@@ -14,7 +14,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-dev \
                 python-cairo
 RUN         useradd --create-home shinken && \
-                pip install shinken==2.0 && \
+                pip install shinken==2.0.3 && \
                 update-rc.d -f apache2 remove && \
                 update-rc.d -f shinken remove
 
