@@ -17,7 +17,8 @@ RUN         useradd --create-home shinken && \
                 update-rc.d -f shinken remove
 
 # Install shinken modules from shinken.io
-RUN         su - shinken -c 'shinken --init' && \
+RUN         chown -R shinken:shinken /etc/shinken/ && \
+                su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install webui' && \
                 su - shinken -c 'shinken install auth-htpasswd' && \
                 su - shinken -c 'shinken install sqlitedb' && \
@@ -49,7 +50,8 @@ ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \
                 rm -f /etc/thruk/htpasswd && \
-                ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd
+                ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd && \
+                chown -R shinken:shinken /etc/shinken/
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/

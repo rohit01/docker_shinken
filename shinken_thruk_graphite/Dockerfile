@@ -19,7 +19,8 @@ RUN         useradd --create-home shinken && \
                 update-rc.d -f shinken remove
 
 # Install shinken modules from shinken.io
-RUN         su - shinken -c 'shinken --init' && \
+RUN         chown -R shinken:shinken /etc/shinken/ && \
+                su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install webui' && \
                 su - shinken -c 'shinken install auth-htpasswd' && \
                 su - shinken -c 'shinken install sqlitedb' && \
@@ -66,7 +67,8 @@ ADD         shinken/ui-graphite.cfg /etc/shinken/modules/ui-graphite.cfg
 RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \
                 rm -f /etc/thruk/htpasswd && \
-                ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd
+                ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd && \
+                chown -R shinken:shinken /etc/shinken/
 
 # Configure graphite
 ADD         graphite/carbon.conf /opt/graphite/conf/
