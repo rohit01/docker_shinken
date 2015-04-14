@@ -9,6 +9,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
                 nginx \
+                ntp \
                 supervisor && \
                 apt-get -y autoremove && \
                 apt-get clean
