@@ -10,7 +10,8 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libsys-statistics-linux-perl \
                 apache2 \
                 libapache2-mod-proxy-html \
-                supervisor
+                supervisor \
+                ntp
 RUN         useradd --create-home shinken && \
                 pip install shinken==2.0.3 && \
                 update-rc.d -f apache2 remove && \
