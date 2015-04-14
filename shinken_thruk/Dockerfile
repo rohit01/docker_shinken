@@ -13,7 +13,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 supervisor \
                 ntp
 RUN         useradd --create-home shinken && \
-                pip install shinken==2.0.3 && \
+                pip install shinken && \
                 update-rc.d -f apache2 remove && \
                 update-rc.d -f shinken remove
 

@@ -14,7 +14,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 apt-get -y autoremove && \
                 apt-get clean
 RUN         useradd --create-home shinken && \
-                pip install shinken==2.0.3 && \
+                pip install shinken && \
                 update-rc.d -f shinken remove
 
 # Install shinken modules from shinken.io
