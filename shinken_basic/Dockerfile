@@ -10,6 +10,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libsys-statistics-linux-perl \
                 nginx \
                 ntp \
+                libssl-dev \
                 supervisor && \
                 apt-get -y autoremove && \
                 apt-get clean
@@ -24,6 +25,16 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install sqlitedb' && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
                 su - shinken -c 'shinken install booster-nrpe'
+
+# Install check_nrpe plugin
+ADD         nrpe-2.15.tar.gz /usr/src/
+RUN         cd /usr/src/nrpe-2.15/ && \
+                ./configure --with-nagios-user=shinken --with-nagios-group=shinken --with-nrpe-user=shinken --with-nrpe-group=shinken --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/x86_64-linux-gnu && \
+                make all && \
+                make install-plugin && \
+                mv /usr/local/nagios/libexec/check_nrpe /usr/lib/nagios/plugins/check_nrpe && \
+                cd / && \
+                rm -rf /usr/src/nrpe-2.15
 
 # Configure nginx
 ADD         shinken/shinken_nginx.conf /etc/nginx/sites-available/shinken_nginx.conf

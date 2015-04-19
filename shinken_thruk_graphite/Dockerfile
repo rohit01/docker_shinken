@@ -13,6 +13,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 supervisor \
                 python-dev \
                 python-cairo \
+                libssl-dev \
                 ntp
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -51,6 +52,16 @@ RUN         gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \
                 apt-get install -y thruk && \
                 apt-get clean
 ADD         thruk/thruk_local.conf /etc/thruk/thruk_local.conf
+
+# Install check_nrpe plugin
+ADD         nrpe-2.15.tar.gz /usr/src/
+RUN         cd /usr/src/nrpe-2.15/ && \
+                ./configure --with-nagios-user=shinken --with-nagios-group=shinken --with-nrpe-user=shinken --with-nrpe-group=shinken --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/x86_64-linux-gnu && \
+                make all && \
+                make install-plugin && \
+                mv /usr/local/nagios/libexec/check_nrpe /usr/lib/nagios/plugins/check_nrpe && \
+                cd / && \
+                rm -rf /usr/src/nrpe-2.15
 
 # Configure apache
 ADD         shinken/shinken_apache.conf /etc/apache2/conf.d/shinken_apache.conf
