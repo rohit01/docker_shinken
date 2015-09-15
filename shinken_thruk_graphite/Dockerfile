@@ -13,6 +13,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 supervisor \
                 python-dev \
                 python-cairo \
+                python-crypto \
                 libssl-dev \
                 inotify-tools \
                 ntp

@@ -11,6 +11,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nginx \
                 ntp \
                 libssl-dev \
+                python-crypto \
                 inotify-tools \
                 supervisor && \
                 apt-get -y autoremove && \

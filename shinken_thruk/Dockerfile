@@ -12,6 +12,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libapache2-mod-proxy-html \
                 supervisor \
                 libssl-dev \
+                python-crypto \
                 inotify-tools \
                 ntp
 RUN         useradd --create-home shinken && \
