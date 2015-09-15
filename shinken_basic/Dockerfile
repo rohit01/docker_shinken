@@ -11,6 +11,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 nginx \
                 ntp \
                 libssl-dev \
+                inotify-tools \
                 supervisor && \
                 apt-get -y autoremove && \
                 apt-get clean
@@ -52,6 +53,10 @@ ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-maste
 ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users
+
+# Add shinken config watcher to restart arbiter, when changes happen
+ADD         shinken/watch_shinken_config.sh /usr/bin/watch_shinken_config.sh
+RUN         chmod 755 /usr/bin/watch_shinken_config.sh
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/

@@ -14,6 +14,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-dev \
                 python-cairo \
                 libssl-dev \
+                inotify-tools \
                 ntp
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -90,6 +91,10 @@ ADD         graphite/local_settings.py /opt/graphite/webapp/graphite/local_setti
 RUN         mkdir -p /var/log/graphite && \
                 cd /opt/graphite/webapp/graphite/ && \
                 python manage.py syncdb --noinput
+
+# Add shinken config watcher to restart arbiter, when changes happen
+ADD         shinken/watch_shinken_config.sh /usr/bin/watch_shinken_config.sh
+RUN         chmod 755 /usr/bin/watch_shinken_config.sh
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/

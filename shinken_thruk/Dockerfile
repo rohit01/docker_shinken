@@ -12,6 +12,7 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libapache2-mod-proxy-html \
                 supervisor \
                 libssl-dev \
+                inotify-tools \
                 ntp
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
@@ -64,6 +65,10 @@ RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 rm -f /etc/thruk/htpasswd && \
                 ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd && \
                 chown -R shinken:shinken /etc/shinken/
+
+# Add shinken config watcher to restart arbiter, when changes happen
+ADD         shinken/watch_shinken_config.sh /usr/bin/watch_shinken_config.sh
+RUN         chmod 755 /usr/bin/watch_shinken_config.sh
 
 # Copy extra NRPE plugins and fix permissions
 ADD         extra_plugins/* /usr/lib/nagios/plugins/
