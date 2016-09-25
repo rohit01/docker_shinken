@@ -24,3 +24,19 @@ Note:
 * If you are using custom NRPE plugins, please mount your plugins directory inside docker container at /usr/local/custom_plugins. You need to define resource paths accordingly.
 
 Docker registry link: <https://registry.hub.docker.com/u/rohit01/shinken_thruk/>
+
+
+Alternative Installation:
+========================
+
+###Using docker-compose and local files:
+
+It is possible to create a customized instance of the Docker image building it from the source.
+To do this, make any changes that you need to `shinken.cfg` inside the `shinken` folder and then build using the provided `docker-compose.yml` file provided that docker compose is installed.
+
+    ```
+    $ docker-compose build
+    $ docker-compose up -d 
+    ```
+
+If everything worked correctly then browse to the site. If there are problems then run `docker-compose up` without the `-d` flag and look at the command output to make sure that everything is running as it should.
