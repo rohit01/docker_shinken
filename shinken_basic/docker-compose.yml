@@ -4,6 +4,8 @@ services:
   shinken:
     build:
       context: .
+    environment:
+    - "TZ=UTC"  # UTC can be replaced by any valid timezone.
     ports:
       - "80:80"
     volumes:
