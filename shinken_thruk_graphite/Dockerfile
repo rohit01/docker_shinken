@@ -18,14 +18,14 @@ RUN         apt-get update && apt-get install -y python-pip \
                 inotify-tools \
                 ntp
 RUN         useradd --create-home shinken && \
-                pip install shinken && \
+                pip install shinken pymongo>=3.0.3 requests arrow bottle==0.12.8 && \
                 update-rc.d -f apache2 remove && \
                 update-rc.d -f shinken remove
 
 # Install shinken modules from shinken.io
 RUN         chown -R shinken:shinken /etc/shinken/ && \
                 su - shinken -c 'shinken --init' && \
-                su - shinken -c 'shinken install webui' && \
+                su - shinken -c 'shinken install webui2' && \
                 su - shinken -c 'shinken install auth-htpasswd' && \
                 su - shinken -c 'shinken install sqlitedb' && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
@@ -74,7 +74,8 @@ ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
 ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
 ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
-ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
+COPY        shinken/webui2.cfg /etc/shinken/modules/webui2.cfg
+COPY        shinken/webui2_worldmap.cfg /var/lib/shinken/modules/webui2/plugins/worldmap/plugin.cfg
 ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 ADD         shinken/graphite.cfg /etc/shinken/modules/graphite.cfg
 ADD         shinken/ui-graphite.cfg /etc/shinken/modules/ui-graphite.cfg

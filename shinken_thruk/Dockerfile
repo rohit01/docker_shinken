@@ -77,6 +77,10 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2043980... replaces webui with webui2 and adds worldmap configuration
 # Define mountable directories
 VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 
