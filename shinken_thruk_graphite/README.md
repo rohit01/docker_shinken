@@ -3,7 +3,7 @@ Shinken Thruk Graphite
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/rohit01/shinken_thruk_graphite.svg)](https://hub.docker.com/r/rohit01/shinken_thruk_graphite/) [![Docker Stars](https://img.shields.io/docker/stars/rohit01/shinken_thruk_graphite.svg)](https://hub.docker.com/r/rohit01/shinken_thruk_graphite/) [![](https://badge.imagelayers.io/rohit01/shinken_thruk_graphite:latest.svg)](https://imagelayers.io/?images=rohit01/shinken_thruk_graphite:latest)
 
-It contains shinken, thruk and graphite installation along with few must have shinken modules like WebUI (Web Interface), standard nrpe plugins + few extra ones, nrpe-booster support and a web server (apache2).
+It contains shinken, thruk and graphite installation along with few must have shinken modules like WebUI2 (Web Interface), standard nrpe plugins + few extra ones, nrpe-booster support and a web server (apache2).
 
 How to run:
 
@@ -13,9 +13,9 @@ How to run:
 
 Once done, visit these urls (Default credentials - admin/admin):
 
-* Default WebUI: <http://localhost/>
+* Default WebUI2: <http://localhost/>
 * Thruk Web Interface: <http://localhost/thruk/>
-* Graphs for perf data are available in WebUI. Sample link: <http://localhost/service/docker_shinken/http_port_7770#graphs>
+* Graphs for perf data are available in WebUI2. Sample link: <http://localhost/service/docker_shinken/http_port_7770#graphs>
 
 Note:
 
@@ -30,14 +30,41 @@ Docker registry link: <https://registry.hub.docker.com/u/rohit01/shinken_thruk_g
 Alternative Installation:
 ========================
 
-###Using docker-compose and local files:
+### Using docker-compose and local files:
 
 It is possible to create a customized instance of the Docker image building it from the source.
 To do this, make any changes that you need to `shinken.cfg` inside the `shinken` folder and then build using the provided `docker-compose.yml` file provided that docker compose is installed.
 
     ```
     $ docker-compose build
-    $ docker-compose up -d 
+    $ docker-compose up -d
     ```
 
 If everything worked correctly then browse to the site. If there are problems then run `docker-compose up` without the `-d` flag and look at the command output to make sure that everything is running as it should.
+
+
+##### WebUI2 - Using the worldmap:
+
+The worldmap plugin has been added. In order to use it you need to customize the file `shinken/webui2_worldmap.cfg`.
+
+Change the map initial location in the file by modifying the lines
+
+			default_lat=40.498065
+			default_lng=-73.781811
+
+Then in your host or in a host template you need the following attributes:
+
+		 _LOC_LAT
+		 _LOC_LNG
+
+For example for each one of my closets I have a template which only contains the location
+the name is `map-[closet_name]` . All the hosts in that closet then get added this host template
+which then can be conveniently added without having to work with lat and lng coordinates
+
+		# A sample location host template
+		define host {
+		  name        map-rcs-idf01
+		  _LOC_LAT    32.497316
+		  _LOC_LNG    -114.782483
+		  register    0
+		}
