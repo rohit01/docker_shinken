@@ -59,7 +59,7 @@ ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
 ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
 ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
-ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
+ADD         shinken/webui2.cfg /etc/shinken/modules/webui2.cfg
 ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \
@@ -77,10 +77,6 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2043980... replaces webui with webui2 and adds worldmap configuration
 # Define mountable directories
 VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 
